@@ -10,6 +10,39 @@ from firestorehandler import *
 def main():
     today = date.today()
     tomorrow = today+timedelta(1)
+    keywords = ["program stunting jawa timur",
+                "program stunting jatim",
+                "program stunting bangkalan",
+                "program stunting banyuwangi",
+                "program stunting blitar",
+                "program stunting bojonegoro",
+                "program stunting bondowoso",
+                "program stunting gresik",
+                "program stunting jember",
+                "program stunting jombang",
+                "program stunting kediri",
+                "program stunting lamongan",
+                "program stunting lumajang",
+                "program stunting madiun",
+                "program stunting magetan",
+                "program stunting malang",
+                "program stunting mojokerto",
+                "program stunting nganjuk",
+                "program stunting ngawi",
+                "program stunting pacitan",
+                "program stunting pamekasan",
+                "program stunting pasuruan",
+                "program stunting ponorogo",
+                "program stunting probolinggo",
+                "program stunting sampang",
+                "program stunting sidoarjo",
+                "program stunting situbondo",
+                "program stunting sumenep",
+                "program stunting trenggalek",
+                "program stunting tuban",
+                "program stunting tulungagung",
+                "program stunting batu",
+                "program stunting surabaya"]
 
     logger = logging.getLogger(__name__)  # Create a logger instance
     logger.setLevel(logging.DEBUG)  # Set the logging level to DEBUG
@@ -30,7 +63,7 @@ def main():
     logger.info("Date: " + str(today))
     # crawl news
     nc = NewsCrawler(logger, start_date=today, end_date=tomorrow)
-    news_df = nc.crawl_news(keywords=["program stunting jawa timur", "program stunting jatim"])
+    news_df = nc.crawl_news(keywords=keywords)
     if len(news_df.index) == 0:
         return
     # pre-process news text and location classification
