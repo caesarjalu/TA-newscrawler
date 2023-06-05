@@ -21,7 +21,7 @@ class FirestoreHandler:
             self.logger.error(e)
 
     def insert(self, df):
-        newsdict = df.to_dict('index')
+        newsdict = df.to_dict('records')
         year = newsdict[0]['published_date'].strftime("%Y")
         try:
             newscount_year_data = self.db.collection("newscount").document(year).get().to_dict()
