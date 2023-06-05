@@ -31,7 +31,7 @@ class FirestoreHandler:
             sys.exit(1)
         self.logger.debug("Inserting " + str(len(newsdict)) + " data into firestore...")
         batch = self.db.batch()
-        for data in newsdict.values():
+        for data in newsdict:
             try:
                 batch.set(self.db.collection(self.newsdata).document(), data)
                 for loc in data["location"]:

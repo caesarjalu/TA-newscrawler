@@ -17,7 +17,8 @@ def main():
     logger.propagate = False  # Disable propagation to the root logger
     logger.addHandler(console_handler)  # Add the console handler to the logger
 
-    df = pd.read_csv('../newsdata/2023_stunting_program_news.csv', parse_dates=['published_date'],
+    path = '../newsdata/2023-06-05.csv'
+    df = pd.read_csv(path, parse_dates=['published_date'],
                      converters={"location": literal_eval})
     print(df.dtypes)
     fh = FirestoreHandler(logger, mode="prod")
