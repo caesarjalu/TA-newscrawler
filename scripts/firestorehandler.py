@@ -4,9 +4,8 @@ import sys
 
 
 class FirestoreHandler:
-    def __init__(self, logger, year, mode="test"):
+    def __init__(self, logger, mode="test"):
         try:
-            this.year = year
             cred = credentials.Certificate("../resource/firebase-secretkey.json")
             initialize_app(cred)
             self.db = firestore.client()
@@ -23,8 +22,9 @@ class FirestoreHandler:
 
     def insert(self, df):
         newsdict = df.to_dict('index')
+        year = newsdict[0]['published_date'].strftime("%Y")
         try:
-            newscount_year_data = self.db.collection("newscount").document(this.year).get().to_dict()
+            newscount_year_data = self.db.collection("newscount").document(year).get().to_dict()
         except Exception as e:
             self.logger.error("Failed to get newscount:")
             self.logger.error(e)
@@ -40,7 +40,7 @@ class FirestoreHandler:
                 self.logger.error("Failed to insert news \"" + data['title'] + "\":")
                 self.logger.error(e)
         try:
-            batch.set(self.db.collection(self.newscount).document(this.year), newscount_year_data)
+            batch.set(self.db.collection(self.newscount).document(year), newscount_year_data)
         except Exception as e:
             self.logger.error("Failed to insert newscount:")
             self.logger.error(e)

@@ -20,7 +20,6 @@ def main():
     df = pd.read_csv('../newsdata/2023_stunting_program_news.csv', parse_dates=['published_date'],
                      converters={"location": literal_eval})
     print(df.dtypes)
-    year = df.loc[0, 'published_date']
     fh = FirestoreHandler(logger, mode="prod")
     fh.insert(df)
 
