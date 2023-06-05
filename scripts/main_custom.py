@@ -52,7 +52,7 @@ def main():
     console_handler.setLevel(logging.DEBUG)
     console_handler.setFormatter(formatter)
     # Create a file handler and set the formatter
-    file_handler = logging.FileHandler('../logs/' + str(start_date) + ' - ' + str(end_date) + '.txt')
+    file_handler = logging.FileHandler('../logs/' + str(start_date) + ' - ' + str(end_date) + '.log')
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
     logger.propagate = False  # Disable propagation to the root logger
@@ -63,11 +63,9 @@ def main():
     # crawl news
     nc = NewsCrawler(logger, start_date=start_date, end_date=end_date)
     news_df = nc.crawl_news(keywords=keywords)
-    # news_df = news_df.dropna(subset=['title', 'text'])
-    # news_df = news_df.drop_duplicates(subset='title')
     if len(news_df.index) == 0:
         return
-    news_df.to_csv('../newsdata/3-4_june_2023_all_news.csv', index=False)  # save to csv
+    # news_df.to_csv('../newsdata/3-4_june_2023_all_news.csv', index=False)  # save to csv
     # pre-process news text and location classification
     tp = TextProcessing(logger)
     processed_df = tp.run(news_df)
@@ -78,10 +76,10 @@ def main():
     filtered_df = sf.run(processed_df)
     if len(filtered_df.index) == 0:
         return
-    filtered_df.to_csv('../newsdata/3-4_june_2023_stunting_program_news.csv', index=False)  # save to csv
+    # filtered_df.to_csv('../newsdata/3-4_june_2023_stunting_program_news.csv', index=False)  # save to csv
     # insert data into firestore
-    # fh = FirestoreHandler(logger)
-    # fh.insert(filtered_df)
+    fh = FirestoreHandler(logger, mode="prod")
+    fh.insert(filtered_df)
 
 
 if __name__ == '__main__':
