@@ -9,7 +9,7 @@ from firestorehandler import *
 
 def main():
     today = date.today()
-    tomorrow = today+timedelta(1)
+    tomorrow = today + timedelta(1)
     keywords = ["program stunting jawa timur",
                 "program stunting jatim",
                 "program stunting bangkalan",
@@ -53,7 +53,7 @@ def main():
     console_handler.setLevel(logging.DEBUG)
     console_handler.setFormatter(formatter)
     # Create a file handler and set the formatter
-    file_handler = logging.FileHandler('../logs/' + str(today) + '.txt')
+    file_handler = logging.FileHandler('../logs/' + str(today) + '.log')
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
     logger.propagate = False  # Disable propagation to the root logger
@@ -79,7 +79,7 @@ def main():
     # save to csv
     filtered_df.to_csv('../newsdata/' + str(today) + '.csv', index=False)
     # insert data into firestore
-    fh = FirestoreHandler(logger)
+    fh = FirestoreHandler(logger, mode="prod")
     fh.insert(filtered_df)
 
 

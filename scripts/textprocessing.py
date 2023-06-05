@@ -3,12 +3,14 @@ import string
 import pandas as pd
 from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory, Stemmer, ArrayDictionary
+import nltk
 from nltk.tokenize import word_tokenize
 from sklearn import feature_extraction
 
 
 class TextProcessing:
     def __init__(self, logger):
+        nltk.download('punkt')
         self.logger = logger
         self.stopword = StopWordRemoverFactory().create_stop_word_remover()  # membuat stopword
         # membuat stemmer
