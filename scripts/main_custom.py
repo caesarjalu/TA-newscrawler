@@ -7,8 +7,8 @@ from firestorehandler import *
 
 
 def main():
-    start_date = (2023, 6, 3)
-    end_date = (2023, 6, 4)
+    start_date = (2023, 6, 18)
+    end_date = (2023, 6, 19)
     keywords = ["program stunting jawa timur",
                 "program stunting jatim",
                 "program stunting bangkalan",
@@ -61,8 +61,8 @@ def main():
 
     logger.info("Date: " + str(start_date) + " - " + str(end_date))
     # crawl news
-    nc = NewsCrawler(logger, start_date=start_date, end_date=end_date)
-    news_df = nc.crawl_news(keywords=keywords)
+    nc = NewsCrawler(logger, start_date=start_date, end_date=end_date, max_results=5)
+    news_df = nc.crawl_news(keywords=keywords[:1])
     if len(news_df.index) == 0:
         return
     # news_df.to_csv('../newsdata/3-4_june_2023_all_news.csv', index=False)  # save to csv
@@ -78,7 +78,7 @@ def main():
         return
     # filtered_df.to_csv('../newsdata/3-4_june_2023_stunting_program_news.csv', index=False)  # save to csv
     # insert data into firestore
-    fh = FirestoreHandler(logger, mode="prod")
+    fh = FirestoreHandler(logger, mode="test")
     fh.insert(filtered_df)
 
 

@@ -1,5 +1,6 @@
 from firebase_admin import credentials, initialize_app, firestore
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import sys
 
 
@@ -41,8 +42,9 @@ class FirestoreHandler:
                 self.logger.error(e)
         try:
             batch.set(self.db.collection(self.newscount).document(year), newscount_year_data)
+            batch.set(self.db.collection("misc").document("misc-data"), {"UpdatedAt": datetime.now(tz=ZoneInfo("Asia/Jakarta"))})
         except Exception as e:
-            self.logger.error("Failed to insert newscount:")
+            self.logger.error("Failed to insert newscount / misc:")
             self.logger.error(e)
         try:
             batch.commit()

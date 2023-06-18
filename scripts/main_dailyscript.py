@@ -8,7 +8,7 @@ from firestorehandler import *
 
 
 def main():
-    today = date.today()
+    today = date.today() - timedelta(1)
     tomorrow = today + timedelta(1)
     keywords = ["program stunting jawa timur",
                 "program stunting jatim",
