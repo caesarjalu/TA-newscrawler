@@ -42,7 +42,7 @@ class FirestoreHandler:
                 self.logger.error(e)
         try:
             batch.set(self.db.collection(self.newscount).document(year), newscount_year_data)
-            batch.set(self.db.collection("misc").document("misc-data"), {"UpdatedAt": datetime.now(tz=ZoneInfo("Asia/Jakarta"))})
+            batch.set(self.db.collection(self.newscount).document("misc"), {"UpdatedAt": datetime.now(tz=ZoneInfo("Asia/Jakarta"))})
         except Exception as e:
             self.logger.error("Failed to insert newscount / misc:")
             self.logger.error(e)
